@@ -36,10 +36,8 @@ jobs:
           ref: ${{ env.GIT_REF }}
 
       - name: Install Wrangler
-        run: |
-         npm install -g wrangler
-         npm create cloudflare\@2.5.0 -- my-worker-project
-
+        run: npm install -g wrangler
+        
       - name: Set Cloudflare Environment Variables
         run: |
           echo "CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" >> $GITHUB_ENV
