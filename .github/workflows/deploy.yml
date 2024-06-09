@@ -38,7 +38,7 @@ jobs:
       - name: Install Wrangler
         run: |
          npm install -g wrangler
-         wrangler init my-worker-project
+         npm create cloudflare\@2.5.0 -- my-worker-project
 
       - name: Set Cloudflare Environment Variables
         run: |
