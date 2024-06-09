@@ -36,7 +36,9 @@ jobs:
           ref: ${{ env.GIT_REF }}
 
       - name: Install Wrangler
-        run: npm install -g wrangler
+        run: |
+         npm install -g wrangler
+         wrangler init my-worker-project
 
       - name: Set Cloudflare Environment Variables
         run: |
@@ -52,7 +54,7 @@ jobs:
           existing_namespace_id=$(echo "$namespace_output" | jq -r '.[] | select(.title == "oaifreehelper-oai_global_variables_preview" or .title == "worker-oai_global_variables_preview" or .title == "oai_global_variables1") | .id' | head -n 1)
           if [ -z "$existing_namespace_id" ]; then
             echo "No existing KV namespace found, creating a new one."
-            namespace_creation_output=$(wrangler kv namespace create "oai_global_variables" --title "111") || exit 1
+            namespace_creation_output=$(wrangler kv namespace create "oai_global_variables") || exit 1
             echo "Namespace creation output: $namespace_creation_output"
             namespace_id=$(echo "$namespace_creation_output" | grep -oP '(?<=id = ")[^"]+')
             echo "CF_KV_NAMESPACE_ID=$namespace_id" >> $GITHUB_ENV
